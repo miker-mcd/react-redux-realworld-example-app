@@ -1,8 +1,13 @@
+import App from './App';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
 import { createStore } from 'redux';
 
-const defaultState = { checked: false };
+const defaultState = {
+  appName: 'commune',
+  articles: null
+};
 const reducer = function(state = defaultState, action) {
   switch (action.type) {
     case 'TOGGLE':
@@ -12,10 +17,9 @@ const reducer = function(state = defaultState, action) {
 };
 const store = createStore(reducer);
 
-class App extends React.Component {
-  render() {
-    return <h1>Hello, World!</h1>;
-  }
-}
-
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root')
+);
