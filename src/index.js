@@ -2,25 +2,19 @@ import App from './components/App';
 import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import React from 'react';
-import { applyMiddleware, createStore } from 'redux';
-import { promiseMiddleware } from './middleware';
-
-const defaultState = {
-  appName: 'conduit',
-  articles: null
-};
-const reducer = function(state = defaultState, action) {
-  switch (action.type) {
-    case 'HOME_PAGE_LOADED':
-      return { ...state, articles: action.payload.articles };
-  }
-  return state;
-};
-const store = createStore(reducer, applyMiddleware(promiseMiddleware));
+import store from './store';
+import Home from './components/Home';
+import Login from './components/Login';
+import { Router, Route, IndexRoute, hashHistory } from 'react-router';
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <Router history={hashHistory}>
+      <Route path="/" component={App} />
+      <IndexRoute component={App} />
+      <Route path="login" component={Login} />
+    </Router>
+    }
   </Provider>,
   document.getElementById('root')
 );
